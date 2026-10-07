@@ -1,0 +1,225 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>PostgreSQL Like a Pro: VS Code Edition — Try it in your editor</title><meta name="description" content="Install the PostgreSQL extension for Visual Studio Code, connect a database, and query with IntelliSense, @pgsql, and Copilot Agent mode."><link rel="canonical" href="https://sadiqali-emumba.github.io/pgsql-vscode-demo/staging/v1.0.0/"><link rel="icon" href="/pgsql-vscode-demo/staging/v1.0.0/favicon.svg" type="image/svg+xml"><meta name="robots" content="noindex, nofollow"><meta name="theme-color" content="#09090b" media="(prefers-color-scheme: dark)"><meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)"><meta property="og:type" content="website"><meta property="og:title" content="PostgreSQL Like a Pro: VS Code Edition — Try it in your editor"><meta property="og:description" content="Install the PostgreSQL extension for Visual Studio Code, connect a database, and query with IntelliSense, @pgsql, and Copilot Agent mode."><meta property="og:url" content="https://sadiqali-emumba.github.io/pgsql-vscode-demo/staging/v1.0.0/"><!-- Apply a saved theme before first paint, so there is no flash. --><script>
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch {}
+    </script><link rel="stylesheet" href="/pgsql-vscode-demo/staging/v1.0.0/_astro/index.Db-kHSI4.css"></head><body id="top"><a class="skip-link" href="#main">Skip to content</a><header class="site-header" data-site-header data-astro-cid-fzpbxy5g><div class="container site-header__inner" data-astro-cid-fzpbxy5g><a class="brand" href="#top" data-astro-cid-fzpbxy5g>PostgreSQL Like a Pro <span class="brand__suffix" data-astro-cid-fzpbxy5g>/ VS Code Edition</span></a><div class="site-header__actions" data-astro-cid-fzpbxy5g><button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" data-astro-cid-l6lhmie6><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon theme-toggle__sun" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+  <path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon theme-toggle__moon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008" />
+</svg></button><script type="module">var e=document.documentElement,t=()=>e.dataset.theme===`dark`;function n(){document.querySelectorAll(`[data-theme-toggle]`).forEach(e=>{e.setAttribute(`aria-label`,`Switch to ${t()?`light`:`dark`} theme`)})}document.querySelectorAll(`[data-theme-toggle]`).forEach(r=>r.addEventListener(`click`,()=>{let r=t()?`light`:`dark`;e.dataset.theme=r;try{localStorage.setItem(`theme`,r)}catch{}n()})),n();</script><!-- Appears once the hero buttons scroll away (see script). Hidden from AT and tab order until then. --><a class="btn btn--primary btn--sm header-cta" href="https://marketplace.visualstudio.com/items?itemName=ms-ossdata.vscode-pgsql" data-cta="install-header" data-header-cta="true" aria-label="Install the extension" tabindex="-1" aria-hidden="true" data-astro-cid-fzpbxy5g="true" data-astro-cid-ekguhzzh><span class="header-cta__long" data-astro-cid-fzpbxy5g>Install the extension</span><span class="header-cta__short" data-astro-cid-fzpbxy5g>Install</span></a></div></div></header><script type="module">var e=document.querySelector(`[data-site-header]`),t=document.querySelector(`[data-header-cta]`),n=document.getElementById(`hero-ctas`);if(e&&t&&n){let r=n=>{e.classList.toggle(`is-stuck`,n),t.tabIndex=n?0:-1,t.setAttribute(`aria-hidden`,String(!n))};new IntersectionObserver(([e])=>r(!e.isIntersecting&&e.boundingClientRect.top<0),{rootMargin:`-${e.offsetHeight}px 0px 0px 0px`}).observe(n)}</script><main id="main"><section class="hero" aria-labelledby="hero-heading" data-astro-cid-ge2uvauf><svg class="hero__grid" aria-hidden="true" data-astro-cid-ge2uvauf><defs data-astro-cid-ge2uvauf><pattern id="hero-grid" width="48" height="48" patternUnits="userSpaceOnUse" data-astro-cid-ge2uvauf><path d="M48 0H0V48" fill="none" stroke="var(--color-grid)" stroke-width="1" data-astro-cid-ge2uvauf></path></pattern></defs><rect width="100%" height="100%" fill="url(#hero-grid)" data-astro-cid-ge2uvauf></rect></svg><div class="container hero__inner" data-astro-cid-ge2uvauf><p class="hero__eyebrow" data-astro-cid-ge2uvauf><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M7 4v16l13 -8l-13 -8" />
+</svg>PostgreSQL Like a Pro · VS Code Edition</p><h1 id="hero-heading" data-astro-cid-ge2uvauf>Nice work! Now try it in VS Code.</h1><p class="hero__body" data-astro-cid-ge2uvauf>Install the free PostgreSQL extension for Visual Studio Code, connect a database, and run every move from the series in under 20 minutes.</p><div class="hero__ctas" id="hero-ctas" data-astro-cid-ge2uvauf><a class="btn btn--primary" href="https://marketplace.visualstudio.com/items?itemName=ms-ossdata.vscode-pgsql" data-cta="install" data-astro-cid-ge2uvauf="true" data-astro-cid-ekguhzzh>Install the extension<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon btn__arrow" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M5 12l14 0" />
+  <path d="M13 18l6 -6" />
+  <path d="M13 6l6 6" />
+</svg></a><a class="btn btn--secondary" href="https://github.com/Azure-Samples/postgresql-extension-playground" data-cta="examples" data-astro-cid-ge2uvauf="true" data-astro-cid-ekguhzzh><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>Open the sample project</a></div><a class="text-link" href="#build-agent" data-cta="agent" data-astro-cid-ge2uvauf>Or build an agent with Postgres <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M5 12l14 0" />
+  <path d="M13 18l6 -6" />
+  <path d="M13 6l6 6" />
+</svg></a><figure class="demo-wrap" data-astro-cid-dnvw5gz2><div class="glow demo-glow demo-glow--blue" aria-hidden="true" data-astro-cid-dnvw5gz2></div><div class="glow demo-glow demo-glow--teal" aria-hidden="true" data-astro-cid-dnvw5gz2></div><div class="demo-frame" data-astro-cid-dnvw5gz2><div class="vsc" data-demo role="img" aria-label="Animation: searching for the PostgreSQL extension in VS Code, installing it, then running a query and asking @pgsql a question." data-astro-cid-dnvw5gz2><div class="vsc__title" aria-hidden="true" data-astro-cid-dnvw5gz2><span class="dot" data-astro-cid-dnvw5gz2></span><span class="dot" data-astro-cid-dnvw5gz2></span><span class="dot" data-astro-cid-dnvw5gz2></span><span class="vsc__name" data-astro-cid-dnvw5gz2>Visual Studio Code</span></div><div class="vsc__body" aria-hidden="true" data-astro-cid-dnvw5gz2><div class="frame frame--1" data-astro-cid-dnvw5gz2><div class="activity" data-astro-cid-dnvw5gz2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M15 3v4a1 1 0 0 0 1 1h4" />
+  <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2" />
+  <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+  <path d="M21 21l-6 -6" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon on" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M4 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4" />
+  <path d="M4 15a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4" />
+  <path d="M14 15a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4" />
+  <path d="M14 7l6 0" />
+  <path d="M17 4l0 6" />
+</svg></div><div class="side" data-astro-cid-dnvw5gz2><div class="label" data-astro-cid-dnvw5gz2>EXTENSIONS: MARKETPLACE</div><div class="search" data-astro-cid-dnvw5gz2>PostgreSQL</div><div class="ext" data-astro-cid-dnvw5gz2><div class="ext__ico" data-astro-cid-dnvw5gz2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M4 6a8 3 0 1 0 16 0a8 3 0 1 0 -16 0" />
+  <path d="M4 6v6a8 3 0 0 0 16 0v-6" />
+  <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
+</svg></div><div data-astro-cid-dnvw5gz2><b data-astro-cid-dnvw5gz2>PostgreSQL</b><small data-astro-cid-dnvw5gz2>Microsoft</small><span class="vsc-btn" data-astro-cid-dnvw5gz2>Install</span></div></div></div><div class="main" data-astro-cid-dnvw5gz2><div class="main__h" data-astro-cid-dnvw5gz2>PostgreSQL</div><div class="dim" data-astro-cid-dnvw5gz2>ms-ossdata.vscode-pgsql</div></div></div><div class="frame frame--2" data-astro-cid-dnvw5gz2><div class="activity" data-astro-cid-dnvw5gz2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M15 3v4a1 1 0 0 0 1 1h4" />
+  <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2" />
+  <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+  <path d="M21 21l-6 -6" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon on" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M4 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4" />
+  <path d="M4 15a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4" />
+  <path d="M14 15a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4" />
+  <path d="M14 7l6 0" />
+  <path d="M17 4l0 6" />
+</svg></div><div class="side" data-astro-cid-dnvw5gz2><div class="label" data-astro-cid-dnvw5gz2>EXTENSIONS: MARKETPLACE</div><div class="search" data-astro-cid-dnvw5gz2>PostgreSQL</div><div class="ext" data-astro-cid-dnvw5gz2><div class="ext__ico" data-astro-cid-dnvw5gz2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M4 6a8 3 0 1 0 16 0a8 3 0 1 0 -16 0" />
+  <path d="M4 6v6a8 3 0 0 0 16 0v-6" />
+  <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
+</svg></div><div data-astro-cid-dnvw5gz2><b data-astro-cid-dnvw5gz2>PostgreSQL</b><small data-astro-cid-dnvw5gz2>Microsoft</small><span class="vsc-btn vsc-btn--busy" data-astro-cid-dnvw5gz2>Installing…</span></div></div><div class="bar" data-astro-cid-dnvw5gz2><i data-astro-cid-dnvw5gz2></i></div></div><div class="main" data-astro-cid-dnvw5gz2><div class="main__h" data-astro-cid-dnvw5gz2>PostgreSQL</div><div class="dim" data-astro-cid-dnvw5gz2>ms-ossdata.vscode-pgsql</div></div></div><div class="frame frame--3" data-astro-cid-dnvw5gz2><div class="activity" data-astro-cid-dnvw5gz2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M15 3v4a1 1 0 0 0 1 1h4" />
+  <path d="M18 17h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h4l5 5v7a2 2 0 0 1 -2 2" />
+  <path d="M16 17v2a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-10a2 2 0 0 1 2 -2h2" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+  <path d="M21 21l-6 -6" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon on" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M4 6a8 3 0 1 0 16 0a8 3 0 1 0 -16 0" />
+  <path d="M4 6v6a8 3 0 0 0 16 0v-6" />
+  <path d="M4 12v6a8 3 0 0 0 16 0v-6" />
+</svg></div><div class="side" data-astro-cid-dnvw5gz2><div class="label" data-astro-cid-dnvw5gz2>POSTGRESQL: CONNECTIONS</div><div class="tree" data-astro-cid-dnvw5gz2>▾ <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M3 7a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v2a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-2" />
+  <path d="M3 15a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v2a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3l0 -2" />
+  <path d="M7 8l0 .01" />
+  <path d="M7 16l0 .01" />
+  <path d="M11 8h6" />
+  <path d="M11 16h6" />
+</svg> my-server<br data-astro-cid-dnvw5gz2>&nbsp;&nbsp;▾ pagila<br data-astro-cid-dnvw5gz2>&nbsp;&nbsp;&nbsp;&nbsp;▾ Tables<br data-astro-cid-dnvw5gz2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;customer<br data-astro-cid-dnvw5gz2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;film<br data-astro-cid-dnvw5gz2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;rental</div></div><div class="main" data-astro-cid-dnvw5gz2><div class="code" data-astro-cid-dnvw5gz2><span class="k" data-astro-cid-dnvw5gz2>SELECT</span> c.first_name, <span class="f" data-astro-cid-dnvw5gz2>count</span>(*)<br data-astro-cid-dnvw5gz2><span class="k" data-astro-cid-dnvw5gz2>FROM</span> customer c <span class="k" data-astro-cid-dnvw5gz2>JOIN</span> rental r<br data-astro-cid-dnvw5gz2>&nbsp;&nbsp;<span class="k" data-astro-cid-dnvw5gz2>USING</span> (customer_id)<br data-astro-cid-dnvw5gz2><span class="k" data-astro-cid-dnvw5gz2>GROUP BY</span> 1 <span class="k" data-astro-cid-dnvw5gz2>ORDER BY</span> 2 <span class="k" data-astro-cid-dnvw5gz2>DESC</span>;</div><div class="chat" data-astro-cid-dnvw5gz2><span class="q" data-astro-cid-dnvw5gz2>@pgsql</span> <span class="dim" data-astro-cid-dnvw5gz2>who rents the most?</span><div class="a a--thinking" data-astro-cid-dnvw5gz2><span class="typing" data-astro-cid-dnvw5gz2><i data-astro-cid-dnvw5gz2></i><i data-astro-cid-dnvw5gz2></i><i data-astro-cid-dnvw5gz2></i></span>Thinking</div></div></div></div><span class="cursor" data-astro-cid-dnvw5gz2><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M7.904 17.563a1.2 1.2 0 0 0 2.228 .308l2.09 -3.093l4.907 4.907a1.067 1.067 0 0 0 1.509 0l1.047 -1.047a1.067 1.067 0 0 0 0 -1.509l-4.907 -4.907l3.113 -2.09a1.2 1.2 0 0 0 -.309 -2.228l-13.582 -3.904l3.904 13.563" />
+</svg></span></div></div></div><figcaption class="demo-caption" data-astro-cid-dnvw5gz2><button class="demo-toggle" type="button" data-demo-toggle aria-pressed="false" data-astro-cid-dnvw5gz2><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon demo-toggle__pause" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12" />
+  <path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon demo-toggle__play" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M7 4v16l13 -8l-13 -8" />
+</svg><span data-demo-label data-astro-cid-dnvw5gz2>Pause animation</span></button></figcaption></figure><script type="module">var e=document.querySelector(`[data-demo]`),t=document.querySelector(`[data-demo-toggle]`);if(e&&t){let n=t.querySelector(`[data-demo-label]`);t.addEventListener(`click`,()=>{let r=e.classList.toggle(`is-paused`);t.setAttribute(`aria-pressed`,String(r)),t.classList.toggle(`is-paused`,r),n&&(n.textContent=r?`Play animation`:`Pause animation`)})}</script></div></section><section class="caps" aria-labelledby="caps-heading" data-astro-cid-7wcqpozi><div class="container" data-astro-cid-7wcqpozi><h2 id="caps-heading" class="visually-hidden" data-astro-cid-7wcqpozi>What the extension does</h2><ul class="caps__grid" data-astro-cid-7wcqpozi><li class="cap" data-astro-cid-7wcqpozi><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M7 12l5 5l-1.5 1.5a3.536 3.536 0 1 1 -5 -5l1.5 -1.5" />
+  <path d="M17 12l-5 -5l1.5 -1.5a3.536 3.536 0 1 1 5 5l-1.5 1.5" />
+  <path d="M3 21l2.5 -2.5" />
+  <path d="M18.5 5.5l2.5 -2.5" />
+  <path d="M10 11l-2 2" />
+  <path d="M13 14l-2 2" />
+</svg><h3 data-astro-cid-7wcqpozi>Connect and explore</h3><p data-astro-cid-7wcqpozi>Add a connection and browse databases, schemas, and tables in VS Code.</p></li><li class="cap" data-astro-cid-7wcqpozi><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M7 8l-4 4l4 4" />
+  <path d="M17 8l4 4l-4 4" />
+  <path d="M14 4l-4 16" />
+</svg><h3 data-astro-cid-7wcqpozi>Schema-aware IntelliSense</h3><p data-astro-cid-7wcqpozi>Completions and object names that match the database you&#39;re connected to.</p></li><li class="cap" data-astro-cid-7wcqpozi><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12" />
+  <path d="M9.5 9h.01" />
+  <path d="M14.5 9h.01" />
+  <path d="M9.5 13a3.5 3.5 0 0 0 5 0" />
+</svg><h3 data-astro-cid-7wcqpozi>Ask @pgsql</h3><p data-astro-cid-7wcqpozi>Get answers grounded in your connected database, right in Copilot Chat.</p></li><li class="cap" data-astro-cid-7wcqpozi><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M6 6a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2l0 -4" />
+  <path d="M12 2v2" />
+  <path d="M9 12v9" />
+  <path d="M15 12v9" />
+  <path d="M5 16l4 -2" />
+  <path d="M15 14l4 2" />
+  <path d="M9 18h6" />
+  <path d="M10 8v.01" />
+  <path d="M14 8v.01" />
+</svg><h3 data-astro-cid-7wcqpozi>Agent mode, with approval</h3><p data-astro-cid-7wcqpozi>Let Copilot work through an unfamiliar schema. It can act, but only with your approval.</p></li></ul></div></section><section class="partners" aria-labelledby="partners-heading" data-astro-cid-edpm6wi3><div class="container partners__inner" data-astro-cid-edpm6wi3><div data-astro-cid-edpm6wi3><p class="partners__label" data-astro-cid-edpm6wi3>Powered by</p><h2 id="partners-heading" class="partners__line" data-astro-cid-edpm6wi3>PostgreSQL on Azure with AMD processors</h2></div><div class="partners__logos" data-astro-cid-edpm6wi3><span class="logo-slot logo-slot--md" data-logo-pending="Microsoft Azure" data-astro-cid-yk3ymb4c>Microsoft Azure</span><span class="partners__plus" aria-hidden="true" data-astro-cid-edpm6wi3>+</span><span class="logo-slot logo-slot--md" data-logo-pending="AMD" data-astro-cid-yk3ymb4c>AMD</span></div></div></section><section class="section" aria-labelledby="why-heading" data-astro-cid-wquofb6r><div class="container" data-astro-cid-wquofb6r><p class="eyebrow" data-astro-cid-wquofb6r>Why the editor</p><h2 id="why-heading" class="section-title" data-astro-cid-wquofb6r>Everything from the series, without leaving your editor</h2><ul class="why-grid" data-astro-cid-wquofb6r><li class="why-card" data-astro-cid-wquofb6r><span class="why-card__icon" data-astro-cid-wquofb6r><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M21 7l-18 0" />
+  <path d="M18 10l3 -3l-3 -3" />
+  <path d="M6 20l-3 -3l3 -3" />
+  <path d="M3 17l18 0" />
+</svg></span><h3 data-astro-cid-wquofb6r>Stay in flow</h3><p data-astro-cid-wquofb6r>Connect, query, and manage PostgreSQL where you already write code.</p></li><li class="why-card" data-astro-cid-wquofb6r><span class="why-card__icon" data-astro-cid-wquofb6r><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M7 8l-4 4l4 4" />
+  <path d="M17 8l4 4l-4 4" />
+  <path d="M14 4l-4 16" />
+</svg></span><h3 data-astro-cid-wquofb6r>Write SQL that matches your schema</h3><p data-astro-cid-wquofb6r>IntelliSense knows your connected database, so names and completions are right the first time.</p></li><li class="why-card" data-astro-cid-wquofb6r><span class="why-card__icon" data-astro-cid-wquofb6r><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M18 4a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-5l-5 3v-3h-2a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12" />
+  <path d="M9.5 9h.01" />
+  <path d="M14.5 9h.01" />
+  <path d="M9.5 13a3.5 3.5 0 0 0 5 0" />
+</svg></span><h3 data-astro-cid-wquofb6r>Bring AI in on your terms</h3><p data-astro-cid-wquofb6r>Ask @pgsql about your data. Agent mode can act, but only with your approval.</p></li><li class="why-card" data-astro-cid-wquofb6r><span class="why-card__icon" data-astro-cid-wquofb6r><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M3 12h4l3 8l4 -16l3 8h4" />
+</svg></span><h3 data-astro-cid-wquofb6r>Find out why it&#39;s slow</h3><p data-astro-cid-wquofb6r>Open the Metrics Dashboard and Azure Advisor recommendations without switching tools.</p></li></ul></div></section><section class="section" id="build-agent" aria-labelledby="agent-heading" data-astro-cid-r6jhfbbr><div class="container" data-astro-cid-r6jhfbbr><p class="eyebrow" data-astro-cid-r6jhfbbr>Hands-on</p><h2 id="agent-heading" class="section-title" data-astro-cid-r6jhfbbr>Build a research agent backed by PostgreSQL on Azure</h2><p class="section-intro" data-astro-cid-r6jhfbbr>Turn what you learned into a working agent: PostgreSQL as the vector store, a Microsoft Foundry agent as the brain, and real Washington State case law as the data.</p><ol class="steps" data-astro-cid-r6jhfbbr><li class="step" data-astro-cid-r6jhfbbr><span class="step__num" aria-hidden="true" data-astro-cid-r6jhfbbr>01</span><div data-astro-cid-r6jhfbbr><h3 data-astro-cid-r6jhfbbr><span class="visually-hidden" data-astro-cid-r6jhfbbr>Step 1: </span>Set up your environment</h3><p data-astro-cid-r6jhfbbr>Clone the repo, create a Python virtual environment, and add your keys to <code>.env</code>.</p></div><div class="cmd" data-astro-cid-wiibe6ht><pre class="cmd__body" tabindex="0" role="region" aria-label="Shell commands for step 1" data-astro-cid-wiibe6ht><code data-astro-cid-wiibe6ht><span class="cmd__prompt" aria-hidden="true" data-astro-cid-wiibe6ht>$ </span>git clone https://github.com/Azure-Samples/postgres-agents
+<span class="cmd__prompt" aria-hidden="true" data-astro-cid-wiibe6ht>$ </span>cd postgres-agents
+<span class="cmd__prompt" aria-hidden="true" data-astro-cid-wiibe6ht>$ </span>pip install -r requirements.txt</code></pre><button class="cmd__copy" type="button" data-copy="git clone https://github.com/Azure-Samples/postgres-agents
+cd postgres-agents
+pip install -r requirements.txt" aria-label="Copy commands for step 1" data-astro-cid-wiibe6ht><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon cmd__icon-copy" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" />
+  <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon cmd__icon-done" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M5 12l5 5l10 -10" />
+</svg></button></div><script type="module">var e=()=>document.getElementById(`copy-status`);document.querySelectorAll(`.cmd__copy`).forEach(t=>t.addEventListener(`click`,async()=>{let n=t.dataset.copy??``;try{await navigator.clipboard.writeText(n)}catch{let e=Object.assign(document.createElement(`textarea`),{value:n});e.setAttribute(`readonly`,``),e.style.position=`absolute`,e.style.left=`-9999px`,document.body.append(e),e.select(),document.execCommand(`copy`),e.remove()}t.classList.add(`is-done`);let r=e();r&&(r.textContent=`Copied to clipboard`),setTimeout(()=>{t.classList.remove(`is-done`),r&&(r.textContent=``)},1800)}));</script></li><li class="step" data-astro-cid-r6jhfbbr><span class="step__num" aria-hidden="true" data-astro-cid-r6jhfbbr>02</span><div data-astro-cid-r6jhfbbr><h3 data-astro-cid-r6jhfbbr><span class="visually-hidden" data-astro-cid-r6jhfbbr>Step 2: </span>Enable the extensions</h3><p data-astro-cid-r6jhfbbr>Allow-list <code>azure_ai</code> and <code>vector</code> on your Azure Database for PostgreSQL server, then create them.</p></div><div class="cmd" data-astro-cid-wiibe6ht><pre class="cmd__body" tabindex="0" role="region" aria-label="SQL for step 2" data-astro-cid-wiibe6ht><code data-astro-cid-wiibe6ht>CREATE EXTENSION IF NOT EXISTS azure_ai;
+CREATE EXTENSION IF NOT EXISTS vector;</code></pre><button class="cmd__copy" type="button" data-copy="CREATE EXTENSION IF NOT EXISTS azure_ai;
+CREATE EXTENSION IF NOT EXISTS vector;" aria-label="Copy SQL for step 2" data-astro-cid-wiibe6ht><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon cmd__icon-copy" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" />
+  <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon cmd__icon-done" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M5 12l5 5l10 -10" />
+</svg></button></div></li><li class="step" data-astro-cid-r6jhfbbr><span class="step__num" aria-hidden="true" data-astro-cid-r6jhfbbr>03</span><div data-astro-cid-r6jhfbbr><h3 data-astro-cid-r6jhfbbr><span class="visually-hidden" data-astro-cid-r6jhfbbr>Step 3: </span>Load data and generate embeddings</h3><p data-astro-cid-r6jhfbbr>Create the <code>cases</code> table and embed the case opinions with Azure OpenAI. About 3–5 minutes.</p></div><div class="cmd" data-astro-cid-wiibe6ht><pre class="cmd__body" tabindex="0" role="region" aria-label="Shell commands for step 3" data-astro-cid-wiibe6ht><code data-astro-cid-wiibe6ht><span class="cmd__prompt" aria-hidden="true" data-astro-cid-wiibe6ht>$ </span>cd load_data
+<span class="cmd__prompt" aria-hidden="true" data-astro-cid-wiibe6ht>$ </span>python main.py
+<span class="cmd__prompt" aria-hidden="true" data-astro-cid-wiibe6ht>$ </span>cd ..</code></pre><button class="cmd__copy" type="button" data-copy="cd load_data
+python main.py
+cd .." aria-label="Copy commands for step 3" data-astro-cid-wiibe6ht><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon cmd__icon-copy" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" />
+  <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon cmd__icon-done" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M5 12l5 5l10 -10" />
+</svg></button></div></li><li class="step" data-astro-cid-r6jhfbbr><span class="step__num" aria-hidden="true" data-astro-cid-r6jhfbbr>04</span><div data-astro-cid-r6jhfbbr><h3 data-astro-cid-r6jhfbbr><span class="visually-hidden" data-astro-cid-r6jhfbbr>Step 4: </span>Give your agent a Postgres tool</h3><p data-astro-cid-r6jhfbbr><code>vector_search_cases</code> in <code>legal_agent_tools.py</code> runs a pgvector similarity search the agent can call.</p></div><div class="step__art step__art--mono" aria-hidden="true" data-astro-cid-r6jhfbbr><span class="step__file" data-astro-cid-r6jhfbbr>legal_agent_tools.py</span><br data-astro-cid-r6jhfbbr>def <b data-astro-cid-r6jhfbbr>vector_search_cases</b>(query)</div></li><li class="step" data-astro-cid-r6jhfbbr><span class="step__num" aria-hidden="true" data-astro-cid-r6jhfbbr>05</span><div data-astro-cid-r6jhfbbr><h3 data-astro-cid-r6jhfbbr><span class="visually-hidden" data-astro-cid-r6jhfbbr>Step 5: </span>Create and run the agent</h3><p data-astro-cid-r6jhfbbr>Initialize the agent in your Microsoft Foundry project with gpt-4o-mini, and answer a real legal question end to end.</p></div><div class="cmd" data-astro-cid-wiibe6ht><pre class="cmd__body" tabindex="0" role="region" aria-label="Shell commands for step 5" data-astro-cid-wiibe6ht><code data-astro-cid-wiibe6ht><span class="cmd__prompt" aria-hidden="true" data-astro-cid-wiibe6ht>$ </span>python src/simple_postgres_and_ai_agent.py</code></pre><button class="cmd__copy" type="button" data-copy="python src/simple_postgres_and_ai_agent.py" aria-label="Copy commands for step 5" data-astro-cid-wiibe6ht><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon cmd__icon-copy" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666" />
+  <path d="M4.012 16.737a2.005 2.005 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1" />
+</svg><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon cmd__icon-done" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M5 12l5 5l10 -10" />
+</svg></button></div></li><li class="step" data-astro-cid-r6jhfbbr><span class="step__num" aria-hidden="true" data-astro-cid-r6jhfbbr>06</span><div data-astro-cid-r6jhfbbr><h3 data-astro-cid-r6jhfbbr><span class="visually-hidden" data-astro-cid-r6jhfbbr>Step 6: </span>Test and iterate</h3><p data-astro-cid-r6jhfbbr>Ask follow-up questions in the Microsoft Foundry playground and trace each step.</p></div><div class="step__art step__trace" aria-hidden="true" data-astro-cid-r6jhfbbr><span class="chip" data-astro-cid-r6jhfbbr>Plan</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon step__arrow" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M5 12l14 0" />
+  <path d="M13 18l6 -6" />
+  <path d="M13 6l6 6" />
+</svg><span class="chip" data-astro-cid-r6jhfbbr>Call tool</span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon step__arrow" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M5 12l14 0" />
+  <path d="M13 18l6 -6" />
+  <path d="M13 6l6 6" />
+</svg><span class="chip" data-astro-cid-r6jhfbbr>Answer</span></div></li></ol><div class="agent-cta" data-astro-cid-r6jhfbbr><a class="btn btn--secondary" href="https://github.com/Azure-Samples/postgres-agents" data-cta="agents-repo" data-astro-cid-r6jhfbbr="true" data-astro-cid-ekguhzzh><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>Open postgres-agents</a></div><p class="visually-hidden" aria-live="polite" id="copy-status" data-astro-cid-r6jhfbbr></p></div></section><section class="section" aria-labelledby="keep-going-heading" data-astro-cid-7z2flt7k><div class="container" data-astro-cid-7z2flt7k><h2 id="keep-going-heading" class="section-title" data-astro-cid-7z2flt7k>Keep going</h2><ul class="links" data-astro-cid-7z2flt7k><li data-astro-cid-7z2flt7k><a class="tile" href="https://azure-samples.github.io/postgres-hub/" data-astro-cid-7z2flt7k><div data-astro-cid-7z2flt7k><h3 data-astro-cid-7z2flt7k>Explore more samples on the PostgreSQL Hub</h3><p data-astro-cid-7z2flt7k>Learning pathways, solution accelerators, and community.</p></div><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon tile__arrow" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M17 7l-10 10" />
+  <path d="M8 7l9 0l0 9" />
+</svg></a></li><li data-astro-cid-7z2flt7k><a class="tile" href="https://github.com/microsoft/vscode-pgsql" data-astro-cid-7z2flt7k><div data-astro-cid-7z2flt7k><h3 data-astro-cid-7z2flt7k>Report an issue or request a feature</h3><p data-astro-cid-7z2flt7k>Open an issue or start a discussion on github.com/microsoft/vscode-pgsql.</p></div><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon tile__arrow" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M17 7l-10 10" />
+  <path d="M8 7l9 0l0 9" />
+</svg></a></li></ul></div></section><section class="closing" aria-labelledby="closing-heading" data-astro-cid-prurgk2d><div class="container" data-astro-cid-prurgk2d><div class="cta-card" data-astro-cid-prurgk2d><div class="glow cta-card__glow--blue" aria-hidden="true" data-astro-cid-prurgk2d></div><div class="glow cta-card__glow--teal" aria-hidden="true" data-astro-cid-prurgk2d></div><h2 id="closing-heading" data-astro-cid-prurgk2d>You watched the workflow. Now it lives in your editor.</h2><p data-astro-cid-prurgk2d>Free extension. Install it, connect a database, and ask @pgsql about your data.</p><div class="cta-card__actions" data-astro-cid-prurgk2d><a class="btn btn--primary" href="https://marketplace.visualstudio.com/items?itemName=ms-ossdata.vscode-pgsql" data-cta="install-closing" data-astro-cid-prurgk2d="true" data-astro-cid-ekguhzzh>Install the extension<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon btn__arrow" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M5 12l14 0" />
+  <path d="M13 18l6 -6" />
+  <path d="M13 6l6 6" />
+</svg></a><a class="btn btn--secondary" href="https://github.com/Azure-Samples/postgresql-extension-playground" data-cta="examples-closing" data-astro-cid-prurgk2d="true" data-astro-cid-ekguhzzh><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>Open the sample project</a></div><a class="text-link" href="#build-agent" data-cta="agent-closing" data-astro-cid-prurgk2d>Or build an agent with Postgres <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon" aria-hidden="true" focusable="false">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+  <path d="M5 12l14 0" />
+  <path d="M13 18l6 -6" />
+  <path d="M13 6l6 6" />
+</svg></a></div></div></section></main><footer class="site-footer" data-astro-cid-nns7i3if><div class="container site-footer__inner" data-astro-cid-nns7i3if><div class="lockup" data-astro-cid-nns7i3if><span data-astro-cid-nns7i3if>Powered by</span><span class="logo-slot logo-slot--sm" data-logo-pending="Microsoft Azure" data-astro-cid-yk3ymb4c>Microsoft Azure</span><span class="logo-slot logo-slot--sm" data-logo-pending="AMD" data-astro-cid-yk3ymb4c>AMD</span></div></div></footer></body></html>
