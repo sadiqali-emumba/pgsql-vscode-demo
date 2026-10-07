@@ -1,0 +1,152 @@
+<!doctype html>
+<!--
+  Staging shell (v4, owner 2026-10-06): one link, a bar on top, and a version picker.
+  Each version is a full build of that tag (or of the version branch in progress) under
+  staging/<id>/, shown in the frame below. versions.json is written by deploy-staging.yml.
+  Not part of the site build; nothing here ships with the page itself.
+-->
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Staging · PostgreSQL Like a Pro: VS Code Edition</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        --bar: 3rem;
+        font: 14px/1.4 system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        background: #09090b;
+        color: #e4e4e7;
+      }
+
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        height: var(--bar);
+        padding: 0 1rem;
+        background: #141417;
+        border-bottom: 1px solid rgb(255 255 255 / 0.12);
+        white-space: nowrap;
+      }
+
+      .bar__tag {
+        padding: 0.15rem 0.5rem;
+        border: 1px solid rgb(255 255 255 / 0.2);
+        border-radius: 999px;
+        font-size: 0.75rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: #a1a1aa;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #a1a1aa;
+      }
+
+      select {
+        min-height: 2.25rem;
+        padding: 0 0.5rem;
+        font: inherit;
+        color: #fafafa;
+        background: #09090b;
+        border: 1px solid rgb(255 255 255 / 0.24);
+        border-radius: 8px;
+      }
+
+      select:focus-visible,
+      a:focus-visible {
+        outline: 3px solid #4da3ff;
+        outline-offset: 2px;
+      }
+
+      .bar__note {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #a1a1aa;
+      }
+
+      .bar__open {
+        margin-left: auto;
+        color: #a1a1aa;
+      }
+
+      iframe {
+        display: block;
+        width: 100%;
+        height: calc(100% - var(--bar));
+        border: 0;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+
+      @media (max-width: 40rem) {
+        .bar__note,
+        .bar__label-text {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="bar">
+      <span class="bar__tag">Staging</span>
+      <label><span class="bar__label-text">Version</span> <select id="version" aria-label="Version"></select></label>
+      <span class="bar__note" id="note" aria-live="polite"></span>
+      <a class="bar__open" id="open" href="./" target="_blank" rel="noopener">Open alone<span class="visually-hidden"> (opens in a new tab)</span></a>
+    </header>
+    <iframe id="frame" title="The landing page, at the selected version"></iframe>
+    <script>
+      // The selected version lives in the hash (#v3.1.0), so the one staging link can also point
+      // at a version, and back/forward step through what was viewed.
+      const select = document.getElementById('version');
+      const frame = document.getElementById('frame');
+      const note = document.getElementById('note');
+      const open = document.getElementById('open');
+      fetch('versions.json', { cache: 'no-store' })
+        .then((r) => r.json())
+        .then(({ versions }) => {
+          for (const v of versions) {
+            const o = document.createElement('option');
+            o.value = v.id;
+            o.textContent = v.label;
+            select.append(o);
+          }
+          const show = () => {
+            const id = decodeURIComponent(location.hash.slice(1));
+            const v = versions.find((x) => x.id === id) || versions[0];
+            select.value = v.id;
+            note.textContent = v.note || '';
+            const src = `${v.id}/`;
+            if (frame.getAttribute('src') !== src) frame.setAttribute('src', src);
+            open.href = src;
+            document.title = `Staging (${v.id}) · PostgreSQL Like a Pro: VS Code Edition`;
+          };
+          select.addEventListener('change', () => (location.hash = select.value));
+          addEventListener('hashchange', show);
+          show();
+        });
+    </script>
+  </body>
+</html>
