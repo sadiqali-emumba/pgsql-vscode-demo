@@ -1,9 +1,10 @@
 { "versions": [
+  {"id": "v6.1.0", "label": "v6.1.0 · live", "note": "The live version, released 2026-10-09."},
   {"id": "v6.1", "label": "v6.1", "note": "Kept for comparison, not released."},
-  {"id": "v6", "label": "v6", "note": "In progress, not released. Built 2026-10-09."},
+  {"id": "v6", "label": "v6", "note": "Kept for comparison, not released."},
   {"id": "v5.4", "label": "v5.4", "note": "Kept for comparison, not released."},
   {"id": "v5.3", "label": "v5.3", "note": "Kept for comparison, not released."},
-  {"id": "v5.2.3", "label": "v5.2.3 · live", "note": "The live version, released 2026-10-08."},
+  {"id": "v5.2.3", "label": "v5.2.3", "note": "Released 2026-10-08."},
   {"id": "v5.2.2", "label": "v5.2.2", "note": "Released 2026-10-08."},
   {"id": "v5.2.1", "label": "v5.2.1", "note": "Released 2026-10-08."},
   {"id": "v5.2.0", "label": "v5.2.0", "note": "Released 2026-10-08."},
